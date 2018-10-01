@@ -1,7 +1,13 @@
 # Ping Pong Game in JS
 
-A simple ping pong game in JavaScript, with basic scoring system.
+A simple ping pong game built with JavaScript, with a basic scoring system.
 
-#### Controls : Use mouse to move the bat .
+### Features
+> Play with the computer on multiple rounds
 
-It will be a little bit buggy, if you find any bugs, feel free to create an issue and create a PR.
+#### Controls
+> Use mouse to move the bat.
+
+#### Contributing
+If you find any bugs, feel free to create an issue or open a PR.
+
