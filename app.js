@@ -15,11 +15,11 @@ var plBatX = 20, // Player bat X coord
 	plName = "",
 	plScore = 0,
 	cpScore = 0,
-	textColor = '#000',
-	ballColor = '#000',
+	colorText = '#000',
+	colorBall = '#000',
 	playerColor = '#000',
 	computerColor = '#000',
-	backgroundColor = '#CCC';
+	colorTable = '#CCC';
 
 window.onload = function() {
 	plName = prompt("Enter Your Name : ");
