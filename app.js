@@ -14,7 +14,12 @@ var plBatX = 20, // Player bat X coord
 	cBallVelY = 4,
 	plName = "",
 	plScore = 0,
-	cpScore = 0;
+	cpScore = 0,
+	textColor = '#000',
+	ballColor = '#000',
+	playerColor = '#000',
+	computerColor = '#000',
+	backgroundColor = '#CCC';
 
 window.onload = function() {
 	plName = prompt("Enter Your Name : ");
@@ -25,19 +30,44 @@ window.onload = function() {
 	canv.addEventListener("mousemove", function(event) {
 		plBatY = event.clientY - 50;
 	});
+	document.querySelector('#colorPicker').addEventListener('change', function(){
+		let element = document.querySelector('#elementSelector').value;
+		
+		switch (element) {
+			case "textColor":
+				textColor = this.value;
+				break;
+			case "ballColor":
+				ballColor = this.value;
+				break;
+			case "playerColor":
+				playerColor = this.value;
+				break;
+			case "computerColor":
+				computerColor = this.value;
+				break;
+			case "backgroundColor":
+				backgroundColor = this.value;
+				break;
+		}
+		
+	}, false)
 }
 
 var update = function() {
 	// Draw the canvas
-	ctx.fillStyle = "#CCC";
+	ctx.fillStyle = backgroundColor;
 	ctx.fillRect(0, 0, canv.width, canv.height);
-	ctx.fillStyle = "#333";
+	ctx.fillStyle = playerColor;
 	ctx.fillRect(plBatX, plBatY, 20, 100); // Bat width = 20px, height = 100px
+	ctx.fillStyle = computerColor;
 	ctx.fillRect(cpBatX, cpBatY, 20, 100);
+	ctx.fillStyle = ballColor;
 	ctx.beginPath();
 	ctx.arc(cBallX, cBallY, 15, 0, 2*Math.PI);
 	ctx.fill();
 	ctx.font = "15px Source Code Pro Semibold";
+	ctx.fillStyle = textColor;
 	ctx.fillText(plName, 80, 25);
 	ctx.fillText(plScore, 80, 40);
 	ctx.fillText("Computer", 500, 25);
