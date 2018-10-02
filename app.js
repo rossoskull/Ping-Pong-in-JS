@@ -13,31 +13,49 @@ var plBatX = 20, // Player bat X coord
 	cBallVY = 4,
 	cBallVelY = 4,
 	plName = "",
+    activeSchema = "",
 	plScore = 0,
 	cpScore = 0;
+
+var batSchema = ['#800000', '#ffffff', '#224912'];
+var tableSchema = ['#112233', '#334455', '#662255'];
+var textSchema = ['#987631', '#123994', '#61e213'];
+var ballSchema = ['#987123', '#987123', '#FFFFFF'];
+
+
+var colorBat = "";
+var colorBall = "";
+var colorText = "";
+var colorTable = "";
 
 window.onload = function() {
 	plName = prompt("Enter Your Name : ");
 	if ( plName == "" || plName == null ) {
 		plName = "Player";
 	}
+
+	activeSchema = prompt("Choose color scheme (1,2, or 3)");
+
 	setInterval(update, 1000/60);
+	setActiveColorSchema(activeSchema);
 	canv.addEventListener("mousemove", function(event) {
 		plBatY = event.clientY - 50;
 	});
-}
+};
 
 var update = function() {
 	// Draw the canvas
-	ctx.fillStyle = "#CCC";
+	ctx.fillStyle = colorTable;
 	ctx.fillRect(0, 0, canv.width, canv.height);
-	ctx.fillStyle = "#333";
+	ctx.fillStyle = colorBat;
 	ctx.fillRect(plBatX, plBatY, 20, 100); // Bat width = 20px, height = 100px
 	ctx.fillRect(cpBatX, cpBatY, 20, 100);
 	ctx.beginPath();
 	ctx.arc(cBallX, cBallY, 15, 0, 2*Math.PI);
+	ctx.fillStyle = colorBall;
 	ctx.fill();
 	ctx.font = "15px Source Code Pro Semibold";
+    ctx.fillStyle = colorText;
 	ctx.fillText(plName, 80, 25);
 	ctx.fillText(plScore, 80, 40);
 	ctx.fillText("Computer", 500, 25);
@@ -110,6 +128,20 @@ var update = function() {
 	}
 }
 
+var setActiveColorSchema = function (schemaNumber) {
+    colorBat = batSchema[schemaNumber - 1];
+    colorBall = ballSchema[schemaNumber - 1];
+    colorText = textSchema[schemaNumber - 1];
+    colorTable = tableSchema[schemaNumber - 1];
+
+    if (!colorTable || !colorBat || !colorText || !colorBall) {
+    	colorBat = '#000';
+    	colorBall = '#000';
+    	colorText = '#000';
+    	colorTable = '#ccc';
+	}
+}
+
 // Reset the game
 var reset = function() {
 	plScore = 0;
@@ -119,6 +151,9 @@ var reset = function() {
 	if ( plName == "" || plName == null ) {
 		plName = "Player";
 	}
+
+    activeSchema = prompt("Choose color scheme (1,2, or 3)");
+    setActiveColorSchema(activeSchema);
 }
 
 // Play or pause game
