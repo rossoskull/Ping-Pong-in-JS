@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Ping Pong Game using JS</title>
 </head>
-<body>
-	<div id="wrap">
-		<canvas id="paper" height="480px" width="640px">
-			
-		</canvas>
-		<br>
-		<hr>
-		<button onclick="reset();">Reset</button>
-		<button onclick="pause();">Play / Pause</button>
-	</div>
 
+<body>
+	Your name: <input id="name" type="text">
+	<br>
+	Choose color scheme (1,2, or 3): <input id="schema" type="number">
+	<br>
+	<button onclick="reset();">Reset</button>
+	<button onclick="playPause();">Play / Pause</button>
+	<div id="wrap">
+		<canvas id="paper" height="480px" width="640px"></canvas>
+	</div>
 	<script type="text/javascript" src="app.js"></script>
 </body>
+
 </html>
