@@ -2,33 +2,8 @@
 var canv = document.getElementById("paper");
 var ctx = canv.getContext('2d');	
 
-var plBatX = 20, // Player bat X coord
-	plBatY = canv.height/2 - 50, // Player bat Y coord
-	cpBatX = canv.width - 40, // Computer bat X coord
-	cpBatY = canv.height/2 - 50, // Computer bat Y coord
-	cpBatVY = 3, // Computer bat velocity
-	cBallX = 320, 
-	cBallY = 240, 
-	cBallVX = 6, 
-	cBallVY = 4,
-	cBallVelY = 4,
-	plName = "",
-    activeSchema = "",
-	plScore = 0,
-	cpScore = 0;
-
-var batSchema = ['#800000', '#ffffff', '#224912'];
-var tableSchema = ['#112233', '#334455', '#662255'];
-var textSchema = ['#987631', '#123994', '#61e213'];
-var ballSchema = ['#987123', '#987123', '#FFFFFF'];
-
-
-var colorBat = "";
-var colorBall = "";
-var colorText = "";
-var colorTable = "";
-
 window.onload = function() {
+	init();
 	plName = prompt("Enter Your Name : ");
 	if ( plName == "" || plName == null ) {
 		plName = "Player";
@@ -43,8 +18,37 @@ window.onload = function() {
 	});
 };
 
-var update = function() {
-	// Draw the canvas
+var init = function() {
+	window.plBatX = 20, // Player bat X coord
+	window.plBatY = canv.height/2 - 50, // Player bat Y coord
+	window.cpBatX = canv.width - 40, // Computer bat X coord
+	window.cpBatY = canv.height/2 - 50, // Computer bat Y coord
+	window.cpBatVY = 3, // Computer bat velocity
+	window.cBallX = 320, 
+	window.cBallY = 240, 
+	window.cBallVX = 6, 
+	window.cBallVY = 4,
+	window.cBallVelY = 4,
+	window.plName = "",
+	window.activeSchema = "",
+	window.plScore = 0,
+	window.cpScore = 0;
+
+	window.batSchema = ['#800000', '#ffffff', '#224912'];
+	window.tableSchema = ['#112233', '#334455', '#662255'];
+	window.textSchema = ['#987631', '#123994', '#61e213'];
+	window.ballSchema = ['#987123', '#987123', '#FFFFFF'];
+
+	window.storeBallVX = 0, storeBallVY = 0;
+
+	window.colorBat = "";
+	window.colorBall = "";
+	window.colorText = "";
+	window.colorTable = "";
+};
+
+var canvasDraw = function(){
+
 	ctx.fillStyle = colorTable;
 	ctx.fillRect(0, 0, canv.width, canv.height);
 	ctx.fillStyle = colorBat;
@@ -55,11 +59,17 @@ var update = function() {
 	ctx.fillStyle = colorBall;
 	ctx.fill();
 	ctx.font = "15px Source Code Pro Semibold";
-    ctx.fillStyle = colorText;
+	ctx.fillStyle = colorText;
 	ctx.fillText(plName, 80, 25);
 	ctx.fillText(plScore, 80, 40);
 	ctx.fillText("Computer", 500, 25);
 	ctx.fillText(cpScore, 500, 40);
+
+}
+
+var update = function() {
+	// Draw the canvas
+	canvasDraw();
 
 	cBallX += cBallVX;
 	cBallY += cBallVY;
@@ -117,6 +127,11 @@ var update = function() {
 	
 
 	// Winner
+	displayWinner();
+}
+
+var displayWinner = function (){
+
 	if ( plScore >= 10 ) {
 		alert("The winner is " + plName);
 		reset();
@@ -126,6 +141,7 @@ var update = function() {
 		alert("The winner is Computer");
 		reset();
 	}
+
 }
 
 var setActiveColorSchema = function (schemaNumber) {
@@ -157,7 +173,7 @@ var reset = function() {
 }
 
 // Play or pause game
-var storeBallVX = 0, storeBallVY = 0;
+
 var pause = function() {
 	var temp;
 	temp = cBallVX;
