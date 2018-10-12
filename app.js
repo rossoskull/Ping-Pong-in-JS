@@ -13,46 +13,54 @@ var plBatX = 20, // Player bat X coord
 	cBallVY = 4,
 	cBallVelY = 4,
 	plName = "",
+	activeSchema = "",
 	plScore = 0,
 	cpScore = 0,
-	colorText = '#000',
-	colorBall = '#000',
+	ballColor = '#000',
+	textColor = '#000',
 	playerColor = '#000',
 	computerColor = '#000',
-	colorTable = '#CCC';
+	backgroundColor = '#CCC',
+	batSchema = ['#800000', '#ffffff', '#224912'],
+	backgroundSchema = ['#112233', '#334455', '#662255'],
+	textSchema = ['#987631', '#123994', '#61e213'],
+	ballSchema = ['#987123', '#987123', '#FFFFFF'];
 
 window.onload = function() {
 	plName = prompt("Enter Your Name : ");
 	if ( plName == "" || plName == null ) {
 		plName = "Player";
 	}
+
+	activeSchema = prompt("Choose color scheme (1,2, or 3)");
+
 	setInterval(update, 1000/60);
+	setActiveColorSchema(activeSchema);
 	canv.addEventListener("mousemove", function(event) {
 		plBatY = event.clientY - 50;
 	});
-	document.querySelector('#colorPicker').addEventListener('change', function(){
-		let element = document.querySelector('#elementSelector').value;
-		
-		switch (element) {
-			case "textColor":
-				textColor = this.value;
-				break;
+	document.querySelector("#colorPicker").addEventListener("change", function(){
+		var color = document.querySelector('#colorPicker').value;
+		var elem = document.querySelector('#elementSelector').value;
+		switch (elem) {
 			case "ballColor":
-				ballColor = this.value;
+				ballColor = color;
 				break;
 			case "playerColor":
-				playerColor = this.value;
+				playerColor = color;
 				break;
 			case "computerColor":
-				computerColor = this.value;
+				computerColor = color;
 				break;
 			case "backgroundColor":
-				backgroundColor = this.value;
+				backgroundColor = color;
+				break;
+			case "textColor":
+				textColor = color;
 				break;
 		}
-		
 	}, false)
-}
+};
 
 var update = function() {
 	// Draw the canvas
@@ -62,9 +70,9 @@ var update = function() {
 	ctx.fillRect(plBatX, plBatY, 20, 100); // Bat width = 20px, height = 100px
 	ctx.fillStyle = computerColor;
 	ctx.fillRect(cpBatX, cpBatY, 20, 100);
-	ctx.fillStyle = ballColor;
 	ctx.beginPath();
 	ctx.arc(cBallX, cBallY, 15, 0, 2*Math.PI);
+	ctx.fillStyle = ballColor;
 	ctx.fill();
 	ctx.font = "15px Source Code Pro Semibold";
 	ctx.fillStyle = textColor;
@@ -126,7 +134,6 @@ var update = function() {
 	} else {
 		cpBatVY = 0;
 	}
-	
 
 	// Winner
 	if ( plScore >= 10 ) {
@@ -140,6 +147,22 @@ var update = function() {
 	}
 }
 
+var setActiveColorSchema = function (schemaNumber) {
+	computerColor = batSchema[schemaNumber - 1];
+	playerColor = batSchema[schemaNumber - 1];
+	ballColor = ballSchema[schemaNumber - 1];
+	textColor = textSchema[schemaNumber - 1];
+	backgroundColor = backgroundSchema[schemaNumber - 1];
+
+	if (!backgroundColor || !computerColor || !playerColor || !textColor || !ballColor) {
+		computerColor = '#000';
+		playerColor = '#000';
+		ballColor = '#000';
+		textColor = '#000';
+		backgroundColor = '#ccc';
+	}
+}
+
 // Reset the game
 var reset = function() {
 	plScore = 0;
@@ -149,6 +172,9 @@ var reset = function() {
 	if ( plName == "" || plName == null ) {
 		plName = "Player";
 	}
+
+	activeSchema = prompt("Choose color scheme (1,2, or 3)");
+	setActiveColorSchema(activeSchema);
 }
 
 // Play or pause game
