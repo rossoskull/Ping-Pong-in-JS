@@ -26,6 +26,17 @@ var plBatX = 20, // Player bat X coord
 	textSchema = ['#987631', '#123994', '#61e213'],
 	ballSchema = ['#987123', '#987123', '#FFFFFF'];
 
+var batSchema = ['#800000', '#ffffff', '#224912'];
+var tableSchema = ['#112233', '#334455', '#662255'];
+var textSchema = ['#987631', '#123994', '#61e213'];
+var ballSchema = ['#987123', '#987123', '#FFFFFF'];
+
+
+var colorBat = "";
+var colorBall = "";
+var colorText = "";
+var colorTable = "";
+
 window.onload = function() {
 	plName = prompt("Enter Your Name : ");
 	if ( plName == "" || plName == null ) {
@@ -64,6 +75,7 @@ window.onload = function() {
 
 var update = function() {
 	// Draw the canvas
+
 	ctx.fillStyle = backgroundColor;
 	ctx.fillRect(0, 0, canv.width, canv.height);
 	ctx.fillStyle = playerColor;
