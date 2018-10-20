@@ -13,9 +13,18 @@ var plBatX = 20, // Player bat X coord
 	cBallVY = 4,
 	cBallVelY = 4,
 	plName = "",
-    activeSchema = "",
+	activeSchema = "",
 	plScore = 0,
-	cpScore = 0;
+	cpScore = 0,
+	ballColor = '#000',
+	textColor = '#000',
+	playerColor = '#000',
+	computerColor = '#000',
+	backgroundColor = '#CCC',
+	batSchema = ['#800000', '#ffffff', '#224912'],
+	backgroundSchema = ['#112233', '#334455', '#662255'],
+	textSchema = ['#987631', '#123994', '#61e213'],
+	ballSchema = ['#987123', '#987123', '#FFFFFF'];
 
 var batSchema = ['#800000', '#ffffff', '#224912'];
 var tableSchema = ['#112233', '#334455', '#662255'];
@@ -41,21 +50,44 @@ window.onload = function() {
 	canv.addEventListener("mousemove", function(event) {
 		plBatY = event.clientY - 50;
 	});
+	document.querySelector("#colorPicker").addEventListener("change", function(){
+		var color = document.querySelector('#colorPicker').value;
+		var elem = document.querySelector('#elementSelector').value;
+		switch (elem) {
+			case "ballColor":
+				ballColor = color;
+				break;
+			case "playerColor":
+				playerColor = color;
+				break;
+			case "computerColor":
+				computerColor = color;
+				break;
+			case "backgroundColor":
+				backgroundColor = color;
+				break;
+			case "textColor":
+				textColor = color;
+				break;
+		}
+	}, false)
 };
 
 var update = function() {
 	// Draw the canvas
-	ctx.fillStyle = colorTable;
+
+	ctx.fillStyle = backgroundColor;
 	ctx.fillRect(0, 0, canv.width, canv.height);
-	ctx.fillStyle = colorBat;
+	ctx.fillStyle = playerColor;
 	ctx.fillRect(plBatX, plBatY, 20, 100); // Bat width = 20px, height = 100px
+	ctx.fillStyle = computerColor;
 	ctx.fillRect(cpBatX, cpBatY, 20, 100);
 	ctx.beginPath();
 	ctx.arc(cBallX, cBallY, 15, 0, 2*Math.PI);
-	ctx.fillStyle = colorBall;
+	ctx.fillStyle = ballColor;
 	ctx.fill();
 	ctx.font = "15px Source Code Pro Semibold";
-    ctx.fillStyle = colorText;
+	ctx.fillStyle = textColor;
 	ctx.fillText(plName, 80, 25);
 	ctx.fillText(plScore, 80, 40);
 	ctx.fillText("Computer", 500, 25);
@@ -114,7 +146,6 @@ var update = function() {
 	} else {
 		cpBatVY = 0;
 	}
-	
 
 	// Winner
 	if ( plScore >= 10 ) {
@@ -129,16 +160,18 @@ var update = function() {
 }
 
 var setActiveColorSchema = function (schemaNumber) {
-    colorBat = batSchema[schemaNumber - 1];
-    colorBall = ballSchema[schemaNumber - 1];
-    colorText = textSchema[schemaNumber - 1];
-    colorTable = tableSchema[schemaNumber - 1];
+	computerColor = batSchema[schemaNumber - 1];
+	playerColor = batSchema[schemaNumber - 1];
+	ballColor = ballSchema[schemaNumber - 1];
+	textColor = textSchema[schemaNumber - 1];
+	backgroundColor = backgroundSchema[schemaNumber - 1];
 
-    if (!colorTable || !colorBat || !colorText || !colorBall) {
-    	colorBat = '#000';
-    	colorBall = '#000';
-    	colorText = '#000';
-    	colorTable = '#ccc';
+	if (!backgroundColor || !computerColor || !playerColor || !textColor || !ballColor) {
+		computerColor = '#000';
+		playerColor = '#000';
+		ballColor = '#000';
+		textColor = '#000';
+		backgroundColor = '#ccc';
 	}
 }
 
@@ -152,8 +185,8 @@ var reset = function() {
 		plName = "Player";
 	}
 
-    activeSchema = prompt("Choose color scheme (1,2, or 3)");
-    setActiveColorSchema(activeSchema);
+	activeSchema = prompt("Choose color scheme (1,2, or 3)");
+	setActiveColorSchema(activeSchema);
 }
 
 // Play or pause game
