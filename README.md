@@ -40,4 +40,4 @@ And there is a 'play / pause' button, to either play or pause the game. The play
 > Play with the computer on multiple rounds
 
 #### Contributing
-If you find any bugs, feel free to create an issue or open a PR.
+If you find any bugs, feel free to create an issue or open a pull request.
